@@ -1,123 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Access: Birthday.exe</title>
-    <style>
-        /* --- JAVA SWING / JOPTIONPANE STYLING --- */
-        body {
-            background-color: #313335; /* Dark IDE background */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: "Segoe UI", Tahoma, sans-serif;
-        }
-
-        #desktop {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background: #008080; /* Classic Teal Desktop */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .swing-modal {
-            background: #f0f0f0;
-            border: 1px solid #7a7a7a;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.4);
-            min-width: 400px;
-            max-width: 550px;
-            display: none;
-            flex-direction: column;
-            animation: pop 0.1s linear;
-        }
-
-        @keyframes pop { from { transform: scale(0.9); } to { transform: scale(1); } }
-
-        .swing-header {
-            background: linear-gradient(to right, #1084d0, #000080);
-            color: white;
-            padding: 4px 10px;
-            font-size: 13px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: default;
-        }
-
-        .swing-content {
-            padding: 20px;
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-        }
-
-        .swing-icon {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 24px;
-            border-radius: 50%;
-        }
-
-        .icon-info { background: #0078d7; color: white; }
-        .icon-error { background: #d10000; color: white; }
-        .icon-quest { background: #0078d7; color: white; }
-
-        .swing-body {
-            font-size: 13px;
-            color: #000;
-            flex-grow: 1;
-            white-space: pre-line; /* Keeps your \n line breaks */
-            line-height: 1.4;
-        }
-
-        .swing-footer {
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            background: #f0f0f0;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            margin-top: 10px;
-            border: 1px solid #7a7a7a;
-            padding: 4px;
-            outline: none;
-        }
-
-        button {
-            padding: 4px 25px;
-            background: #e1e1e1;
-            border: 1px solid #7a7a7a;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        button:hover { background: #d5e1f2; border-color: #0078d7; }
-        button:active { background: #b8d1f3; }
-
-        #lyric-img {
-            max-width: 120px;
-            display: none;
-            margin-bottom: 10px;
-            border: 1px solid #999;
-        }
-    </style>
-</head>
 <body>
 
 <div id="desktop">
+    <!-- START BUTTON: This is required to let the music play later -->
+    <button id="init-btn" style="padding: 20px; font-weight: bold; cursor: pointer; z-index: 10;" onclick="runProgram()">
+        Launch Birthday.exe
+    </button>
+
     <div id="modal" class="swing-modal">
         <div class="swing-header">
             <span id="m-title">Message</span>
@@ -149,25 +37,23 @@
     const mIcon = document.getElementById('m-icon');
     const mImg = document.getElementById('lyric-img');
     const audio = document.getElementById('audio');
+    const initBtn = document.getElementById('init-btn');
     
-    // Footer buttons
     const okBtn = document.getElementById('ok-btn');
     const noBtn = document.getElementById('no-btn');
     const yesBtn = document.getElementById('yes-btn');
 
-    let currentStep = 'NAME_INPUT';
     let attempts = 0;
     let resolvePromise;
 
-    // Start
-    window.onload = () => runProgram();
-
     async function runProgram() {
+        initBtn.style.display = 'none'; // Hide the launch button
+        
         // --- CHAPTER 0: IDENTITY ---
         let verified = false;
         while (!verified) {
             let name = await showPrompt("Identity Verification", "Please enter your full name:", "quest");
-            if (name === null) return;
+            if (!name) return;
             if (name.trim().toLowerCase() === "nikita riznyk") {
                 verified = true;
                 await showAlert("Access Granted", "Identity Confirmed: Welcome, Nikita.", "info");
@@ -181,7 +67,7 @@
         const title = "System Access: Birthday.exe";
         while (!access) {
             let pass = await showPrompt("Security Check", "Attempt " + (attempts + 1) + ": Please enter the secret coordinates to proceed :", "quest");
-            if (pass === null) return;
+            if (!pass) return;
 
             if (pass === "53.38079929388395, -1.487514786551031" || pass === "53.38081, -1.48744") {
                 access = true;
@@ -214,7 +100,7 @@
         for (let s of intro) await showAlert("For You", s, "info");
 
         // --- CHAPTER 3: MUSIC & LYRICS ---
-        audio.play();
+        audio.play().catch(e => console.log("Audio failed to play:", e));
         mImg.style.display = "block";
         const lyrics = [
             "🎶 Rode here on the bus...", "🎶 Now you're one of us...", "🎶 It was magic hour.",
@@ -264,7 +150,7 @@
         await showAlert(title, "Happy Birthday Nikita, I love you! ❤️", "info");
         
         mText.innerText = "System Exited.";
-        mFooter.style.display = "none";
+        document.getElementById('m-footer').style.display = "none";
     }
 
     // Modal UI Controllers
@@ -296,12 +182,12 @@
         if(type === 'info') { mIcon.innerText = 'i'; mIcon.className = 'swing-icon icon-info'; }
         if(type === 'error') { mIcon.innerText = 'X'; mIcon.className = 'swing-icon icon-error'; }
         if(type === 'quest') { mIcon.innerText = '?'; mIcon.className = 'swing-icon icon-quest'; }
-        if(input) mInput.focus();
+        if(input) setTimeout(() => mInput.focus(), 10);
     }
 
     function handleOk() {
-        modal.style.display = 'none';
         let val = mInput.style.display === 'block' ? mInput.value : true;
+        modal.style.display = 'none';
         resolvePromise(val);
     }
 
@@ -310,5 +196,3 @@
         resolvePromise(false);
     }
 </script>
-</body>
-</html>
