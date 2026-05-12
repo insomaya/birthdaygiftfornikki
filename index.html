@@ -3,32 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Nikita!</title>
+    <title>System Access: Birthday.exe</title>
     <style>
         body {
-            background-color: #fce4ec; /* A soft birthday pink/white */
+            background-color: #1a1a1a;
+            color: #00ff00; /* Classic Terminal Green */
+            font-family: 'Courier New', Courier, monospace;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
         }
-        #game-container {
+        #window {
+            width: 80%;
+            max-width: 600px;
+            background: #2d2d2d;
+            border: 2px solid #555;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 20px;
             text-align: center;
         }
+        input {
+            background: #000;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 10px;
+            width: 80%;
+            margin-top: 10px;
+            outline: none;
+        }
+        button {
+            background: #00ff00;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover { background: #00cc00; }
+        #photo-container img {
+            width: 200px;
+            border: 3px solid #00ff00;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .lyrics { font-style: italic; color: #00ffff; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <div id="game-container">
-        <h1>Birthday.exe is loading...</h1>
-        <p>Check for pop-ups at the top of your screen!</p>
+    <div id="window">
+        <h2 id="title">System Access: Birthday.exe</h2>
+        <hr border="1" color="#555">
+        <div id="content">
+            <p id="message">Please enter your full name to verify identity:</p>
+            <input type="text" id="userInput">
+            <br>
+            <button onclick="handleInput()">SUBMIT</button>
+        </div>
+        <div id="photo-container"></div>
     </div>
 
-    <!-- This links to your new JavaScript file -->
     <script src="birthdaygift.js"></script>
-    
 </body>
 </html>
