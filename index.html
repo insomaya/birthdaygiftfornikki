@@ -6,65 +6,90 @@
     <title>System Access: Birthday.exe</title>
     <style>
         body {
-            background-color: #1a1a1a;
-            color: #00ff00; /* Classic Terminal Green */
-            font-family: 'Courier New', Courier, monospace;
+            background-color: #008080; /* Classic old Windows Teal background */
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            font-family: "Tahoma", sans-serif;
         }
-        #window {
-            width: 80%;
-            max-width: 600px;
-            background: #2d2d2d;
-            border: 2px solid #555;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        /* This makes it look like a JOptionPane window */
+        #dialog-box {
+            background: #d4d0c8;
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            border-right: 2px solid #404040;
+            border-bottom: 2px solid #404040;
+            width: 400px;
+            padding: 2px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+        .title-bar {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            padding: 3px 5px;
+            font-weight: bold;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .content {
             padding: 20px;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            font-size: 13px;
+            color: black;
         }
         input {
-            background: #000;
-            border: 1px solid #00ff00;
-            color: #00ff00;
-            padding: 10px;
-            width: 80%;
-            margin-top: 10px;
+            width: 90%;
+            border-bottom: 2px solid #fff;
+            border-right: 2px solid #fff;
+            border-top: 2px solid #808080;
+            border-left: 2px solid #808080;
+            padding: 4px;
             outline: none;
         }
         button {
-            background: #00ff00;
-            color: #000;
-            border: none;
-            padding: 10px 20px;
-            margin-top: 10px;
+            width: 75px;
+            background: #d4d0c8;
+            border-top: 2px solid #fff;
+            border-left: 2px solid #fff;
+            border-right: 2px solid #404040;
+            border-bottom: 2px solid #404040;
+            padding: 4px;
             cursor: pointer;
-            font-weight: bold;
+            font-size: 13px;
         }
-        button:hover { background: #00cc00; }
+        button:active {
+            border-top: 2px solid #404040;
+            border-left: 2px solid #404040;
+            border-right: 2px solid #fff;
+            border-bottom: 2px solid #fff;
+        }
         #photo-container img {
-            width: 200px;
-            border: 3px solid #00ff00;
-            border-radius: 10px;
-            margin-top: 20px;
+            width: 150px;
+            border: 1px solid #808080;
+            margin-top: 10px;
         }
-        .lyrics { font-style: italic; color: #00ffff; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <div id="window">
-        <h2 id="title">System Access: Birthday.exe</h2>
-        <hr border="1" color="#555">
-        <div id="content">
-            <p id="message">Please enter your full name to verify identity:</p>
-            <input type="text" id="userInput">
-            <br>
-            <button onclick="handleInput()">SUBMIT</button>
+    <div id="dialog-box">
+        <div class="title-bar">
+            <span id="window-title">Identity Verification</span>
+            <span style="font-size: 10px;">X</span>
         </div>
-        <div id="photo-container"></div>
+        <div class="content">
+            <p id="message" style="text-align: center;">Please enter your full name:</p>
+            <input type="text" id="userInput">
+            <div id="photo-container"></div>
+            <button onclick="handleInput()">OK</button>
+        </div>
     </div>
 
     <script src="birthdaygift.js"></script>
